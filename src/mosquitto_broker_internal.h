@@ -317,10 +317,12 @@ struct mosquitto__config {
 	struct mosquitto__security_options security_options;
 };
 
+////在mosquitto程序中，对某一topic的所有订阅者被组织成一个订阅列表，该订阅列表是一个双向链表，
+////链表的每个节点都保存有一个订阅者，该链表的节点即是：struct _mosquitto_subleaf，定义形式为：
 struct mosquitto__subleaf {
 	struct mosquitto__subleaf *prev;
 	struct mosquitto__subleaf *next;
-	struct mosquitto *context;
+	struct mosquitto *context; ///表示一个订阅客户端，prev和next表示其前一个节点和后一个节点。
 	uint32_t identifier;
 	uint8_t qos;
 	bool no_local;
@@ -343,11 +345,11 @@ struct mosquitto__subshared {
 struct mosquitto__subhier {
 	UT_hash_handle hh;
 	struct mosquitto__subhier *parent;
-	struct mosquitto__subhier *children;
-	struct mosquitto__subleaf *subs;
+	struct mosquitto__subhier *children; ///该成员指针指向同结构的第一个孩子节点；
+	struct mosquitto__subleaf *subs; ///该成员指向订阅列表；
 	struct mosquitto__subshared *shared;
 	struct mosquitto_msg_store *retained;
-	char *topic;
+	char *topic;  ///该节点对应的topic片段；
 	uint16_t topic_len;
 };
 
