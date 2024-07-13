@@ -359,6 +359,8 @@ struct mosquitto {
 	uint16_t remote_port;
 #endif
 	uint32_t events;
+
+	uint64_t auth_plugins_idx;
 };
 
 #define STREMPTY(str) (str[0] == '\0')

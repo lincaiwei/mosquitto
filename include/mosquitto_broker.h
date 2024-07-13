@@ -408,6 +408,8 @@ mosq_EXPORT int mosquitto_client_sub_count(const struct mosquitto *client);
  */
 mosq_EXPORT const char *mosquitto_client_username(const struct mosquitto *client);
 
+mosq_EXPORT uint64_t mosquitto_client_auth_plugins_idx(const struct mosquitto *client);
+mosq_EXPORT int set_mosquitto_client_auth_plugins_idx(struct mosquitto *client,uint64_t auth_plugins_idx);
 
 /* Function: mosquitto_set_username
  *

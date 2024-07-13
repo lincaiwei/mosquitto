@@ -148,6 +148,18 @@ const char *mosquitto_client_username(const struct mosquitto *client)
 }
 
 
+uint64_t mosquitto_client_auth_plugins_idx(const struct mosquitto *client)
+{
+	return client->auth_plugins_idx;
+}
+
+int set_mosquitto_client_auth_plugins_idx(struct mosquitto *client,uint64_t auth_plugins_idx)
+{
+	client->auth_plugins_idx = auth_plugins_idx;
+	return 0;
+}
+
+
 int mosquitto_broker_publish(
 		const char *clientid,
 		const char *topic,
