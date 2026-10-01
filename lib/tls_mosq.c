@@ -136,6 +136,7 @@ int mosquitto__verify_certificate_hostname(X509 *cert, const char *hostname)
 	const unsigned char *data;
 	unsigned char ipv6_addr[16];
 	unsigned char ipv4_addr[4];
+	size_t ip_length;
 	int ipv6_ok;
 	int ipv4_ok;
 
@@ -168,12 +169,17 @@ int mosquitto__verify_certificate_hostname(X509 *cert, const char *hostname)
 #else
 				data = ASN1_STRING_get0_data(nval->d.iPAddress);
 #endif
-				if(nval->d.iPAddress->length == 4 && ipv4_ok){
+#if defined(OPENSSL_VERSION_MAJOR) && OPENSSL_VERSION_MAJOR >= 4
+				ip_length = ASN1_STRING_get_length(nval->d.iPAddress);
+#else
+				ip_length = (size_t)nval->d.iPAddress->length;
+#endif
+				if(ip_length == 4 && ipv4_ok){
 					if(!memcmp(ipv4_addr, data, 4)){
 						sk_GENERAL_NAME_pop_free(san, GENERAL_NAME_free);
 						return 1;
 					}
-				}else if(nval->d.iPAddress->length == 16 && ipv6_ok){
+				}else if(ip_length == 16 && ipv6_ok){
 					if(!memcmp(ipv6_addr, data, 16)){
 						sk_GENERAL_NAME_pop_free(san, GENERAL_NAME_free);
 						return 1;
@@ -197,4 +203,3 @@ int mosquitto__verify_certificate_hostname(X509 *cert, const char *hostname)
 }
 
 #endif
-
