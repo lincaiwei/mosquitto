@@ -56,15 +56,35 @@ enum mosquitto_protocol {
 
 /* Callback events */
 enum mosquitto_plugin_event {
+	/* 配置重载通知；通知插件刷新资源。
+	 * Broker configuration reload notification; lets plugins refresh resources. */
 	MOSQ_EVT_RELOAD = 1,
+	/* ACL 访问控制检查（发布、订阅、取消订阅及 Broker 投递）。
+	 * ACL check for publish, subscribe, unsubscribe and broker delivery. */
 	MOSQ_EVT_ACL_CHECK = 2,
+	/* CONNECT 用户名/密码基础认证。
+	 * Basic username/password authentication for CONNECT. */
 	MOSQ_EVT_BASIC_AUTH = 3,
+	/* MQTT v5 AUTH 扩展认证开始（CONNECT）。
+	 * Start of MQTT v5 AUTH extended authentication (CONNECT). */
 	MOSQ_EVT_EXT_AUTH_START = 4,
+	/* MQTT v5 AUTH 扩展认证继续（后续 AUTH 报文）。
+	 * Continuation of MQTT v5 AUTH extended authentication (later AUTH packets). */
 	MOSQ_EVT_EXT_AUTH_CONTINUE = 5,
+	/* Broker 控制主题（$CONTROL/...）消息处理。
+	 * Broker control-topic ($CONTROL/...) message handling. */
 	MOSQ_EVT_CONTROL = 6,
+	/* 普通消息在接收并通过 ACL 后、转发前的处理/修改。
+	 * Process/modify ordinary messages after ACL and before forwarding. */
 	MOSQ_EVT_MESSAGE = 7,
+	/* TLS-PSK 密钥查询。
+	 * TLS-PSK key lookup. */
 	MOSQ_EVT_PSK_KEY = 8,
+	/* Broker 周期性 tick，用于插件维护任务。
+	 * Periodic broker tick for plugin maintenance tasks. */
 	MOSQ_EVT_TICK = 9,
+	/* 客户端断开通知。
+	 * Client disconnect notification. */
 	MOSQ_EVT_DISCONNECT = 10,
 };
 
