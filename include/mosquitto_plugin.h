@@ -35,11 +35,21 @@ extern "C" {
 /* The old auth only interface stopped at version 4 */
 #define MOSQ_AUTH_PLUGIN_VERSION 4
 
-#define MOSQ_ACL_NONE 0x00
-#define MOSQ_ACL_READ 0x01
-#define MOSQ_ACL_WRITE 0x02
-#define MOSQ_ACL_SUBSCRIBE 0x04
-#define MOSQ_ACL_UNSUBSCRIBE 0x08
+/* No ACL operation is requested; used as the default/empty access mask.
+ * 不请求任何 ACL 操作；用作默认或空权限掩码。 */
+#define MOSQ_ACL_NONE           0x00
+/* Read messages from the broker to the client.
+ * 允许 Broker 向客户端发送消息，即读取权限。 */
+#define MOSQ_ACL_READ           0x01
+/* Write/publish messages from the client to the broker.
+ * 允许客户端向 Broker 写入或发布消息，即写入权限。 */
+#define MOSQ_ACL_WRITE          0x02
+/* Subscribe to a Topic filter; this is separate from reading messages.
+ * 允许订阅 Topic 过滤器；该权限与读取消息权限相互独立。 */
+#define MOSQ_ACL_SUBSCRIBE      0x04
+/* Unsubscribe from a Topic filter.
+ * 允许取消订阅 Topic 过滤器。 */
+#define MOSQ_ACL_UNSUBSCRIBE    0x08
 
 #include <stdbool.h>
 #include <stdint.h>
